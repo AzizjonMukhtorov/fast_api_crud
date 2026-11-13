@@ -10,12 +10,10 @@ from ..db.database import get_db, Session
 from ..services.specializations import (create_specialization_service, 
                                         get_specialization_service,
                                         get_specialization_by_id_service)
-
+from ..auth.dependencies import DB
 
 
 router = APIRouter(tags=['Specialization'])
-DB = Annotated[Session, Depends(get_db)]
-
 
 
 @router.get('/specializations', response_model=list[SpecializationResponse])

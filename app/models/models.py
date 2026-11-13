@@ -1,4 +1,4 @@
-from sqlalchemy import String, Text, ForeignKey, CheckConstraint
+from sqlalchemy import String, Text, Boolean, ForeignKey, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..db.database import Base
@@ -26,3 +26,14 @@ class Doctor(Base):
     is_active: Mapped[bool] = mapped_column(default=True)
     
     specialization: Mapped['Specialization'] = relationship(back_populates='doctors')
+    
+    
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(50), unique=True, index=True)
+    hashed_password: Mapped[str] = mapped_column(String(255))
+    role: Mapped[str] = mapped_column(String(20), default='user')
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    is_admin: Mapped[bool] = mapped_column(Boolean, default=False)
